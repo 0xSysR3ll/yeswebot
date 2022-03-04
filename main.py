@@ -1,8 +1,15 @@
+from ast import Return
+from asyncio import tasks
 from distutils.log import info
+from email import feedparser, message
+from http import client
 from aiohttp import request
 import discord
 from discord.ext import commands
+from discord.ext import tasks
 import requests
+import threading
+import time
 
 bot = commands.Bot(command_prefix="!",description="Yes We Hack tracker")
 
@@ -30,9 +37,43 @@ def live_hactivity(hunter):
             news.append(status)
     return news
 
+
+def get_feed_bug():
+    url = f"https://api.yeswehack.com/hacktivity/"
+    r = requests.get(url)
+    feed = r.text.rsplit("date")
+    news = []
+    for report in feed:
+        report = feed[feed.index(report)]
+        news.append(report)
+    return news[1::]
+
+
+def live_check(news_feed,hold_feed):
+    if news_feed != hold_feed:
+        news_feed = news_feed[0].rsplit('"')
+        bug = news_feed[news_feed.index("bug_type")+4]
+        return bug
+    else:
+        False
+
+@tasks.loop(minutes=1)
+async def lives(saved_feed):
+    if saved_feed != get_feed_bug():
+        embed=discord.Embed(title="__Yes We Hack Tracker__", description=f"News Repport By\n\n", color=discord.Color.red())
+        channel = bot.get_channel(831949020804939837)
+        await channel.send(embed=embed)
+        saved_feed.clear()
+        saved_feed = get_feed_bug()
+    else: 
+        print(saved_feed[0])
+
+
+saved_feed = get_feed_bug()
 @bot.event
 async def on_ready():
     print("Bot is Ready")
+    lives.start(saved_feed)
 
 @bot.command()
 async def infos(ctx,user):
@@ -52,7 +93,7 @@ async def infos(ctx,user):
         await ctx.send(embed=embed)
 
 @bot.command()    
-async def live(ctx):
+async def hunter(ctx):
     user = ["w0rty","spawnzii"] # change the username
     for hunter in user:
         feed = live_hactivity(hunter)
