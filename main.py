@@ -1,15 +1,9 @@
-from ast import Return
 from asyncio import tasks
-from distutils.log import info
-from email import feedparser, message
-from http import client
-from aiohttp import request
 import discord
 from discord.ext import commands
 from discord.ext import tasks
 import requests
-import threading
-import time
+import filecmp
 
 bot = commands.Bot(command_prefix="!",description="Yes We Hack tracker")
 
@@ -59,17 +53,36 @@ def live_check(news_feed,hold_feed):
 
 @tasks.loop(minutes=1)
 async def lives(saved_feed):
-    if saved_feed != get_feed_bug():
+    update = get_feed_bug()
+    for i in update:
+        saved_feed = open('new.txt','a')
+        saved_feed.write(i)
+    
+    saved_feed = "feed.txt"
+    new_feed = "new.txt"
+
+    if filecmp.cmp(saved_feed, new_feed) is False:
         embed=discord.Embed(title="__Yes We Hack Tracker__", description=f"News Repport By\n\n", color=discord.Color.red())
         channel = bot.get_channel(831949020804939837)
         await channel.send(embed=embed)
-        saved_feed.clear()
-        saved_feed = get_feed_bug()
+        open('feed.txt', 'w').close()
+        open('new.txt', 'w').close()
+        for i in update:
+            saved_feed = open('feed.txt','a')
+            saved_feed.write(i)
+
     else: 
-        print(saved_feed[0])
+        update = get_feed_bug()
+        open('feed.txt', 'w').close()
+        open('new.txt', 'w').close()
+        for i in update:
+            saved_feed = open('feed.txt','a')
+            saved_feed.write(i)
+        log = get_feed_bug()
+        print(log[0])
 
 
-saved_feed = get_feed_bug()
+saved_feed = open('feed.txt','r')
 @bot.event
 async def on_ready():
     print("Bot is Ready")
@@ -101,7 +114,7 @@ async def hunter(ctx):
             embed=discord.Embed(title="__Yes We Hack Tracker__", description=f"What our hunters reported ?\n\n **{hunter}** didn't report anything :(", color=discord.Color.red())
             await ctx.send(embed=embed)
         else:
-            embed=discord.Embed(title="__Yes We Hack Tracker__", description=f"What our hunters reported ?\n\n **{hunter}** have found\n **{feed}**", color=discord.Color.red())
+            embed=discord.Embed(title="__Yes We Hack Tracker__", description=f"What our hunters reported ?\n\n **{hunter}** has found\n **{feed}**", color=discord.Color.red())
             await ctx.send(embed=embed)
 
 bot.run("") # add your token 
