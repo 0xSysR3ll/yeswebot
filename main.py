@@ -62,7 +62,12 @@ async def lives(saved_feed):
     new_feed = "new.txt"
 
     if filecmp.cmp(saved_feed, new_feed) is False:
-        embed=discord.Embed(title="__Yes We Hack Tracker__", description=f"News Repport By\n\n", color=discord.Color.red())
+        saved_feed = get_feed_bug()
+        buglist = saved_feed[0].rsplit('"')
+        bug = buglist[buglist.index("bug_type")+4]
+        user = buglist[buglist.index("username")+2]
+        status = buglist[buglist.index("status")+4]
+        embed=discord.Embed(title="__Yes We Hack Tracker__", description=f"News Repport By **{user}**\n\n {bug} status : **{status}**", color=discord.Color.red())
         channel = bot.get_channel(831949020804939837)
         await channel.send(embed=embed)
         open('feed.txt', 'w').close()
