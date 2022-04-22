@@ -67,9 +67,33 @@ async def lives(saved_feed):
         bug = buglist[buglist.index("bug_type")+4]
         user = buglist[buglist.index("username")+2]
         status = buglist[buglist.index("status")+4]
-        embed=discord.Embed(title="__Yes We Hack Tracker__", description=f"News Repport By **{user}**\n\n {bug} status : **{status}**", color=discord.Color.red())
-        channel = bot.get_channel(831949020804939837)
-        await channel.send(embed=embed)
+        print(status)
+        print(user)
+        if user.lower() == "w0rty" or user.lower() == "spawnzii" and status.lower() == "new":
+            embed=discord.Embed(title="__Yes We Hack Tracker__", description=f"New Report By **{user}**\n\n {bug} status : **{status}**", color=discord.Color.red())
+            channel = bot.get_channel(948965313750380645)
+            spoofers = bot.get_channel(831249140087652382)
+            await channel.send(embed=embed)
+            await spoofers.send(embed=embed)
+            
+
+        elif user.lower() == "w0rty" or user.lower() == "spawnzii" and status.lower() == "accepted":
+            embed=discord.Embed(title="__Yes We Hack Tracker__", description=f"Congrats ! **{user}**'s {bug} was **{status}**", color=discord.Color.green())
+            channel = bot.get_channel(948965313750380645)
+            spoofers = bot.get_channel(831249140087652382)
+            await channel.send(embed=embed)
+            await spoofers.send(embed=embed)
+            
+
+        elif user.lower() == "w0rty" or user.lower() == "spawnzii" and status.lower() == "resolved":
+            embed=discord.Embed(title="__Yes We Hack Tracker__", description=f"**{user}**'s {bug} was **{status}** !", color=discord.Color.red())
+            channel = bot.get_channel(948965313750380645)
+            spoofers = bot.get_channel(831249140087652382)
+            await channel.send(embed=embed)
+            await spoofers.send(embed=embed)
+            
+
+#831249140087652382
         open('feed.txt', 'w').close()
         open('new.txt', 'w').close()
         for i in update:
@@ -84,7 +108,8 @@ async def lives(saved_feed):
             saved_feed = open('feed.txt','a')
             saved_feed.write(i)
         log = get_feed_bug()
-        print(log[0])
+        logs = log[0].rsplit('"')
+        user = logs[logs.index("username")+2]
 
 
 saved_feed = open('feed.txt','r')
@@ -112,7 +137,7 @@ async def infos(ctx,user):
 
 @bot.command()    
 async def hunter(ctx):
-    user = ["w0rty","spawnzii"] # change the username
+    user = ["w0rty","spawnzii","perce"] # change the username
     for hunter in user:
         feed = live_hactivity(hunter)
         if not(feed):
