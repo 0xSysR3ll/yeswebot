@@ -8,4 +8,4 @@ COPY . /app
 RUN pip3 install -U pip && pip3 install -r requirements.txt
 
 ENTRYPOINT [ "/bin/sh" ]
-CMD ["./start.sh"]
+CMD [ "./start.sh" ]
