@@ -1,4 +1,4 @@
-# YesWeHack-BOT 
+# YesWeBot
 
 The best Discord bot to track Yes We Hack reports.
 
