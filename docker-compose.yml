@@ -1,0 +1,11 @@
+services:
+  yeswebot:
+    container_name: yeswebot
+    build:
+      context: ./yeswebot
+    image: yeswebot:latest
+    restart: always
+    environment:
+      - CUSTOM=False
+      - DISCORD_TOKEN=
+      - CHANNEL_ID=
