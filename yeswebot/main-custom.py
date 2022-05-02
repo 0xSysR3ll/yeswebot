@@ -216,8 +216,12 @@ async def latest(ctx, hunter=None):
         feed = hunter_feed(hunter)
     else:
         feed = json.load(open("feed.json", "r"))
-    # print(tdy)
+
+    if feed is None:
+        await ctx.send(f"**{hunter}**  was not found in YesWeHack or his profile is private 😞")
+        return
     latest_report = feed["items"][0]
+    bug_date = latest_report['date']
     username = latest_report['report']['hunter']['username']
     bug_name = latest_report['report']['bug_type']['name']
     bug_state = latest_report['status']['workflow_state']
@@ -229,14 +233,17 @@ async def latest(ctx, hunter=None):
     elif bug_state == "new" and hunter is not None:
         embed = discord.Embed(
             title=f"**{username}**'s latest report", color=discord.Color.red())
+        embed.add_field(name="Date", value=bug_date, inline=False)
         embed.add_field(name="Bug type", value=bug_name, inline=False)
     elif bug_state == "accepted":
         embed = discord.Embed(
             title=f"**{username}**'s latest report has been accepted ! 🔥", color=discord.Color.green())
+        embed.add_field(name="Date", value=bug_date, inline=False)
         embed.add_field(name="Bug type", value=bug_name, inline=False)
     else:
         embed = discord.Embed(
             title=f"**{username}**'s latest report has been resolved.", color=discord.Color.grey())
+        embed.add_field(name="Date", value=bug_date, inline=False)
         embed.add_field(name="Bug type", value=bug_name, inline=False)
     await ctx.send(embed=embed)
 
