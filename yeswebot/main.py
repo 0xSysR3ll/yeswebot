@@ -98,7 +98,7 @@ async def live_update():
         await channel.send(embed=embed)
     elif (tdy == date) and (bug_state == "resolved") and latest_report != old_feed['items'][0]:
         embed = discord.Embed(
-            title=f"**{hunter}**'s report has been resolved. ", color=discord.Color.grey())
+            title=f"**{hunter}**'s report has been resolved. ")
         embed.add_field(name="Bug type", value=bug_name, inline=False)
         print(
             f"[+] Update on report {bug_name}. State changed to {bug_state}")
@@ -239,7 +239,7 @@ async def latest(ctx, hunter=None):
         embed.add_field(name="Bug type", value=bug_name, inline=False)
     else:
         embed = discord.Embed(
-            title=f"**{hunter}**'s latest report has been resolved.", color=discord.Color.grey())
+            title=f"**{hunter}**'s latest report has been resolved.")
         embed.add_field(name="Date", value=bug_date, inline=False)
         embed.add_field(name="Bug type", value=bug_name, inline=False)
     await ctx.send(embed=embed)
