@@ -174,7 +174,7 @@ async def infos(ctx, hunter):
     await ctx.send(embed=embed)
 
 
-@bot.command(name="today", help="Display a hunter todays's reports and updates.")
+@bot.command(name="today", help="Display a hunter today's reports and updates.")
 async def today(ctx, hunter=None):
     if hunter is None:
         await ctx.send(f"Please specify the hunter's username in your command !")
@@ -189,7 +189,7 @@ async def today(ctx, hunter=None):
                 hunter)
             embed = discord.Embed(color=discord.Color.blue())
             embed.set_author(
-                name=f"{username} todays's new reports and updates", url=profile, icon_url=avatar_url)
+                name=f"{username} today's new reports and updates", url=profile, icon_url=avatar_url)
             for report in feed['items']:
                 if report['date'] == tdy:
                     counter += 1
