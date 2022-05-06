@@ -164,7 +164,7 @@ async def infos(ctx, hunter):
         return
 
     # Creating nice embed
-    embed = discord.Embed(color=discord.Color.red())
+    embed = discord.Embed(color=discord.Color.blue())
     embed.set_author(
         name=f"Profile of {username}", url=profile, icon_url=avatar_url)
     embed.add_field(name="Rank 🏆", value=rank, inline=False)
