@@ -84,20 +84,20 @@ async def live_update():
     bug_name = latest_report['report']['bug_type']['name']
     bug_state = latest_report['status']['workflow_state']
 
-    if (hunter in HUNTERS) and (tdy == date) and (bug_state == "new") and latest_report != old_feed['items'][0]:
+    if (hunter.lower() in HUNTERS) and (tdy == date) and (bug_state == "new") and latest_report != old_feed['items'][0]:
         embed = discord.Embed(
             title=f"**{hunter}** just reported a new bug !", color=discord.Color.red())
         embed.add_field(name="Bug type", value=bug_name, inline=False)
         print(f"[+] New report by **{hunter}**.")
         await channel.send(embed=embed)
-    elif (hunter in HUNTERS) and (tdy == date) and (bug_state == "accepted") and latest_report != old_feed['items'][0]:
+    elif (hunter.lower() in HUNTERS) and (tdy == date) and (bug_state == "accepted") and latest_report != old_feed['items'][0]:
         embed = discord.Embed(
             title=f"Congratz to **{hunter}** ! His report has been accepted 🔥", color=discord.Color.green())
         embed.add_field(name="Bug type", value=bug_name, inline=False)
         print(
             f"[+] Update on report {bug_name}. State changed to {bug_state}")
         await channel.send(embed=embed)
-    elif (hunter in HUNTERS) and (tdy == date) and (bug_state == "resolved") and latest_report != old_feed['items'][0]:
+    elif (hunter.lower() in HUNTERS) and (tdy == date) and (bug_state == "resolved") and latest_report != old_feed['items'][0]:
         embed = discord.Embed(
             title=f"**{hunter}**'s report has been resolved. ")
         embed.add_field(name="Bug type", value=bug_name, inline=False)
