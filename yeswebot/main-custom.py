@@ -14,7 +14,7 @@ import os
 from pretty_help import PrettyHelp
 
 # CONSTANTS
-HUNTERS = ['SpawnZii', 'W0rty', "Perce", "0xSysr3ll", "rabhi", "Sharan"]
+HUNTERS = ['spawnzii', 'w0rty', "perce", "0xsysr3ll", "kanashiki", "kaluche", "scr4m"]
 USER_URL = f"https://api.yeswehack.com/hunters/"
 HKTVTY_URL = f"https://api.yeswehack.com/hacktivity/"
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
